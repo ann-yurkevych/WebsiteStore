@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<WebsiteClothesSecondEdition.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List of products";
 }
 
-<h1>Index</h1>
+<h1>List of products @ViewBag.DepartmentName</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -52,13 +52,13 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Country.Id)
+                @Html.DisplayFor(modelItem => item.Country.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Department.Id)
+                @Html.DisplayFor(modelItem => item.Department.DepartmentName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Material.Id)
+                @Html.DisplayFor(modelItem => item.Material.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

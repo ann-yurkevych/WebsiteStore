@@ -42,7 +42,7 @@ namespace WebsiteClothesSecondEdition.Controllers
                 return NotFound();
             }
 
-            return View(department);
+            return RedirectToAction("Index", "Products", new {id = department.Id, name = department.DepartmentName});
         }
 
         // GET: Departments/Create

@@ -71,7 +71,7 @@ namespace WebsiteClothesSecondEdition.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", product.CountryId);
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "DepartmentName", product.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", product.DepartmentId);
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", product.MaterialId);
             return View(product);
         }
@@ -79,21 +79,25 @@ namespace WebsiteClothesSecondEdition.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Products == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var product = await _context.Products.FindAsync(id);
+
             if (product == null)
             {
                 return NotFound();
             }
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", product.CountryId);
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", product.DepartmentId);
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Id", product.MaterialId);
+
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", product.CountryId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", product.DepartmentId);
+            ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", product.MaterialId);
+
             return View(product);
         }
+
 
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.

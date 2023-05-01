@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using WebsiteClothesSecondEdition;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WebsiteClothesSecondEdition.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +13,30 @@ builder.Services.AddDbContext<Website2Context>(option => option.UseSqlServer(
 builder.Configuration.GetConnectionString("DefaultConnection")
 ));
 
+builder.Services.AddDbContext<IdentityContext>(option => 
+option.UseSqlServer(builder.Configuration.GetConnectionString("IdentityContext")));
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<IdentityContext>();
+
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<User>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await RoleInitializer.InitializeAsync(userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error while seeding the database." + DateTime.Now.ToString());
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -22,6 +48,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseAuthentication();
 
 app.UseRouting();
 

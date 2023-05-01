@@ -51,7 +51,7 @@ namespace WebsiteClothesSecondEdition.Controllers
         public IActionResult Create()
         {
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name");
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name");
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "DepartmentName");
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name");
             return View();
         }
@@ -71,7 +71,7 @@ namespace WebsiteClothesSecondEdition.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", product.CountryId);
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", product.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "DepartmentName", product.DepartmentId);
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", product.MaterialId);
             return View(product);
         }
@@ -92,7 +92,7 @@ namespace WebsiteClothesSecondEdition.Controllers
             }
 
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", product.CountryId);
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", product.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "DepartmentName", product.DepartmentId);
             ViewData["MaterialId"] = new SelectList(_context.Materials, "Id", "Name", product.MaterialId);
 
             return View(product);
